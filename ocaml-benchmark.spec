@@ -1,4 +1,3 @@
-# $Revision: 1.5 $, $Date: 2011/07/23 06:35:45 $
 Summary:	Benchmark - measure/compare run-time of OCaml functions
 Summary(pl.UTF-8):	Biblioteka benchmark - mierzenie i porównywanie czasu działania funkcji ocamlowych
 Name:		ocaml-benchmark
