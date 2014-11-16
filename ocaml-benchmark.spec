@@ -2,7 +2,7 @@ Summary:	Benchmark - measure/compare run-time of OCaml functions
 Summary(pl.UTF-8):	Biblioteka benchmark - mierzenie i porównywanie czasu działania funkcji ocamlowych
 Name:		ocaml-benchmark
 Version:	1.1
-Release:	1
+Release:	2
 License:	LGPL v3 with linking exception
 Group:		Development/Languages
 Source0:	http://forge.ocamlcore.org/frs/download.php/734/benchmark-%{version}.tar.gz
