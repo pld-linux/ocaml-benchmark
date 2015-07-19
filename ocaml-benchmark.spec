@@ -1,8 +1,16 @@
+#
+# Conditional build:
+%bcond_without	ocaml_opt	# skip building native optimized binaries (bytecode is always built)
+
+%ifnarch %{ix86} %{x8664} arm aarch64 ppc sparc sparcv9
+%undefine	with_ocaml_opt
+%endif
+
 Summary:	Benchmark - measure/compare run-time of OCaml functions
 Summary(pl.UTF-8):	Biblioteka benchmark - mierzenie i porównywanie czasu działania funkcji ocamlowych
 Name:		ocaml-benchmark
 Version:	1.3
-Release:	1
+Release:	2
 License:	LGPL v3 with linking exception
 Group:		Development/Languages
 Source0:	http://forge.ocamlcore.org/frs/download.php/1252/benchmark-%{version}.tar.gz
@@ -57,7 +65,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README.md benchmark.mli
 %dir %{_libdir}/ocaml/benchmark
+%{_libdir}/ocaml/benchmark/benchmark.cma
+%{_libdir}/ocaml/benchmark/benchmark.cmi
+%if %{with ocaml_opt}
 %{_libdir}/ocaml/benchmark/benchmark.a
-%{_libdir}/ocaml/benchmark/benchmark.cm[aix]*
+%{_libdir}/ocaml/benchmark/benchmark.cmx
+%{_libdir}/ocaml/benchmark/benchmark.cmxa
+%{_libdir}/ocaml/benchmark/benchmark.cmxs
+%endif
 %{_libdir}/ocaml/site-lib/benchmark
 %{_examplesdir}/%{name}-%{version}
