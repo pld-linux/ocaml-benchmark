@@ -12,7 +12,7 @@ Summary:	Benchmark - measure/compare run-time of OCaml functions
 Summary(pl.UTF-8):	Biblioteka benchmark - mierzenie i porównywanie czasu działania funkcji ocamlowych
 Name:		ocaml-benchmark
 Version:	1.6
-Release:	1
+Release:	2
 License:	LGPL v3 with linking exception
 Group:		Development/Languages
 Source0:	https://github.com/Chris00/ocaml-benchmark/archive/%{version}/benchmark-%{version}.tar.gz
@@ -42,15 +42,9 @@ Perla o tej samej nazwie.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/benchmark
 
 dune install \
 	--destdir $RPM_BUILD_ROOT
-
-cat >>$RPM_BUILD_ROOT%{_libdir}/ocaml/benchmark/META <<EOF
-directory="+benchmark"
-EOF
-ln -sr $RPM_BUILD_ROOT%{_libdir}/ocaml/benchmark/META $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/benchmark
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -r examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
@@ -78,5 +72,4 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 %{_libdir}/ocaml/benchmark/dune-package
 %{_libdir}/ocaml/benchmark/opam
-%{_libdir}/ocaml/site-lib/benchmark
 %{_examplesdir}/%{name}-%{version}
