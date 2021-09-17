@@ -1,8 +1,8 @@
 #
 # Conditional build:
-%bcond_without	ocaml_opt	# skip building native optimized binaries (bytecode is always built)
+%bcond_without	ocaml_opt	# native optimized binaries (bytecode is always built)
 
-%ifnarch %{ix86} %{x8664} arm aarch64 ppc sparc sparcv9
+%ifnarch %{ix86} %{x8664} %{arm} aarch64 ppc sparc sparcv9
 %undefine	with_ocaml_opt
 %endif
 
@@ -15,10 +15,11 @@ Version:	1.6
 Release:	2
 License:	LGPL v3 with linking exception
 Group:		Development/Languages
+#Source0Download: https://github.com/Chris00/ocaml-benchmark/releases
 Source0:	https://github.com/Chris00/ocaml-benchmark/archive/%{version}/benchmark-%{version}.tar.gz
 # Source0-md5:	3e716610143aeda29bace893ae3b056b
 URL:		https://github.com/Chris00/ocaml-benchmark
-BuildRequires:	ocaml >= 3.04-7
+BuildRequires:	ocaml >= 1:3.12.0
 BuildRequires:	ocaml-camlp4
 BuildRequires:	ocaml-dune
 BuildRequires:	ocaml-findlib
@@ -50,14 +51,17 @@ install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -r examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 # packaged as %doc
+%{__rm} -r $RPM_BUILD_ROOT%{_prefix}/doc/benchmark
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/ocaml/benchmark/benchmark.mli
+# sources
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/ocaml/benchmark/benchmark.ml
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.md src/benchmark.mli
+%doc CHANGES.md README.md src/benchmark.mli
 %dir %{_libdir}/ocaml/benchmark
 %{_libdir}/ocaml/benchmark/META
 %{_libdir}/ocaml/benchmark/benchmark.cma
@@ -68,7 +72,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/ocaml/benchmark/benchmark.a
 %{_libdir}/ocaml/benchmark/benchmark.cmx
 %{_libdir}/ocaml/benchmark/benchmark.cmxa
-%{_libdir}/ocaml/benchmark/benchmark.cmxs
+%attr(755,root,root) %{_libdir}/ocaml/benchmark/benchmark.cmxs
 %endif
 %{_libdir}/ocaml/benchmark/dune-package
 %{_libdir}/ocaml/benchmark/opam
